@@ -18,11 +18,29 @@ using System.Text.RegularExpressions;
 namespace MorseCodeConverter {
     class Program {
         static void Main(string[] args) {
+            /*
+             * When set to 'true', will provide user with additional information
+             * about the data being processed
+             */
+            bool debug = false;
             string input = "";
             /*
              * Dictionary contains each character in Morse Code and the conversion
              * of the characters
+             *
+             * Rules: 
+             * Dot = 1 Unit
+             * Dash = 3 Units
+             * Space between parts of the same letter = 1 Unit
+             * Space between letters of the same word = 3 Units
+             * Space between words = 7 Units
+             *
+             * Each unit is counted as 200 milliseconds
              */
+             // 'unit' is a period of duration when the sound will play
+             int unit = 100;
+             // 'hrtz' is the frequency that will be played by the 'beep'
+             int hrtz = 700;
             Dictionary<char, string> dict = new Dictionary<char, string>(){
                 {'a', ".-"}, {'b', "-..."}, {'c', "-.-."}, {'d', "-.."}, {'e', "."},
                 {'f', "..-."}, {'g', "--."}, {'h', "...."}, {'i', ".."}, {'j', ".---"},
@@ -52,34 +70,53 @@ namespace MorseCodeConverter {
              * beep and '-' as a long beep. ' ' is treated as a pause.
              */
             string str = "";
+            // Loops through each character in the input
             for(int i = 0; i < input.Length; i++){
                 if(dict[input[i]].Equals(dict[' ']) == true){
                     str += "| ";
                 } else { 
                     str += dict[input[i]] + " ";
                 }
-            }
 
-            /*
-             * Searches 'str' and outputs beeps according to what is read
-             */
-            for(int j = 0; j < str.Length; j++){
-                // Short Beep
-                if(str[j].Equals('.')){
-                    Console.Beep(800, 300);
-                // Long Beep
-                } else if(str[j].Equals('-')) {
-                    Console.Beep(800, 550);
-                // Space Between Characters
-                } else if(str[j].Equals(' ')) {
-                    System.Threading.Thread.Sleep(200);
-                // Space Between Words
+                // Space between words
+                if(dict[input[i]].Equals(" ")){
+                    System.Threading.Thread.Sleep(unit * 7);
+                    if(debug){
+                        Console.WriteLine("Word Space");
+                    }
                 } else {
-                    System.Threading.Thread.Sleep(700);
+                    if(debug){
+                        Console.WriteLine(dict[input[i]]);
+                    }
+
+                    for(int j = 0; j < dict[input[i]].Length; j++){
+                        // Dots
+                        if(dict[input[i]][j].Equals('.')) {
+                            Console.Beep(hrtz, unit * 1);
+                            if(debug){
+                                Console.WriteLine("Short");
+                            }
+                        // Dashes
+                        } else if(dict[input[i]][j].Equals('-')) {
+                            Console.Beep(hrtz, unit * 2);
+                            if(debug){
+                                Console.WriteLine("Long");
+                            }
+                        }
+                        // Space between dots and dashes
+                        System.Threading.Thread.Sleep(unit * 1);
+                        if(debug){
+                            Console.WriteLine("Character Space");
+                        }
+                    }
+                    // Space between each letter of the input
+                    System.Threading.Thread.Sleep(unit * 3);
+                    if(debug){
+                        Console.WriteLine("Letter Space");
+                    }
                 }
             }
-
-            Console.WriteLine("Input: " + input + " | Morse Code: " + str);
+            Console.WriteLine("\nInput: " + input + " | Morse Code: " + str);
         }
     }
 }
