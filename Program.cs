@@ -69,14 +69,19 @@ namespace MorseCodeConverter {
              * Converts user input into Morse Code sequence using '.' as a short
              * beep and '-' as a long beep. ' ' is treated as a pause.
              */
-            string str = "";
+            /* Return that shows the user the Morse Code conversion */
+            Console.Write("\nInput: " + input + " | Morse Code: ");
             // Loops through each character in the input
             for(int i = 0; i < input.Length; i++){
                 if(dict[input[i]].Equals(dict[' ']) == true){
-                    str += "| ";
+                    /* Adds converted value to visual output */
+                    Console.Write("| ");
                 } else { 
-                    str += dict[input[i]] + " ";
+                    /* Adds converted value to visual output */
+                    Console.Write(dict[input[i]] + " ");
                 }
+
+
 
                 // Space between words
                 if(dict[input[i]].Equals(" ")){
@@ -116,7 +121,7 @@ namespace MorseCodeConverter {
                     }
                 }
             }
-            Console.WriteLine("\nInput: " + input + " | Morse Code: " + str);
+            Console.Write("\n");
         }
     }
 }
