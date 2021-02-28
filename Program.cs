@@ -37,9 +37,9 @@ namespace MorseCodeConverter {
              *
              * Each unit is counted as 200 milliseconds
              */
-             // 'unit' is a period of duration when the sound will play
+             /* 'unit' is a period of duration when the sound will play */
              int unit = 100;
-             // 'hrtz' is the frequency that will be played by the 'beep'
+             /* 'hrtz' is the frequency that will be played by the 'beep' */
              int hrtz = 700;
             Dictionary<char, string> dict = new Dictionary<char, string>(){
                 {'a', ".-"}, {'b', "-..."}, {'c', "-.-."}, {'d', "-.."}, {'e', "."},
@@ -71,7 +71,7 @@ namespace MorseCodeConverter {
              */
             /* Return that shows the user the Morse Code conversion */
             Console.Write("\nInput: " + input + " | Morse Code: ");
-            // Loops through each character in the input
+            /* Loops through each character in the input */
             for(int i = 0; i < input.Length; i++){
                 if(dict[input[i]].Equals(dict[' ']) == true){
                     /* Adds converted value to visual output */

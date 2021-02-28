@@ -1,0 +1,2 @@
+1) Navigate to folder containing .cs file in the console
+2) Run [dotnet run]
