@@ -35,7 +35,7 @@ namespace MorseCodeConverter {
              * Space between letters of the same word = 3 Units
              * Space between words = 7 Units
              *
-             * Each unit is counted as 200 milliseconds
+             * Units are counted as milliseconds
              */
              /* 'unit' is a period of duration when the sound will play */
              int unit = 100;
